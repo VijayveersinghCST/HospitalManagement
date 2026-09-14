@@ -1,21 +1,22 @@
-import { LayoutGrid } from "lucide-react";
-import ComingSoon from "@/components/common/ComingSoon";
+import Topbar from "@/components/dashboard/Topbar";
+import StatsGrid from "@/components/dashboard/StatsGrid";
+import SummaryRow from "@/components/dashboard/SummaryRow";
+import BottomRow from "@/components/dashboard/BottomRow";
 
 export default function AppDashboardPage() {
-  return (
-    <div>
-      <h1 className="text-2xl font-bold text-slate-900 sm:text-3xl">Dashboard</h1>
-      <p className="mt-1.5 text-sm text-slate-500">
-        A birds-eye view of hospital activity across all departments.
-      </p>
+    return (
+        <div className="h-screen bg-[#eef1f3]">
+            <div className="h-full overflow-y-auto rounded-none border-0 border-[#d4c5e2] bg-white shadow-none">
+                <div className="flex flex-col">
+                    <Topbar />
 
-      <div className="mt-6">
-        <ComingSoon
-          title="Dashboard is on its way"
-          description="Key stats, alerts and activity across the hospital will show up here."
-          icon={LayoutGrid}
-        />
-      </div>
-    </div>
-  );
+                    <main className="flex flex-col gap-4 bg-[#f7f8fa] p-5">
+                        <StatsGrid />
+                        <SummaryRow />
+                        <BottomRow />
+                    </main>
+                </div>
+            </div>
+        </div>
+    );
 }
