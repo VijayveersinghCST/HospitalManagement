@@ -6,6 +6,7 @@ import { useState } from "react";
 import { ChevronDown, LogOut, Plus, X } from "lucide-react";
 import { NAV_ITEMS, findActiveNav } from "@/lib/navigation";
 import { clearAuthToken } from "@/lib/auth";
+import Image from "next/image";
 
 interface SidebarProps {
   isOpen: boolean;
@@ -52,8 +53,9 @@ export default function Sidebar({ isOpen, onClose }: SidebarProps) {
             className="flex items-center gap-3 text-left focus:outline-none"
             title="Tap to close"
           >
-            <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-green-600 text-white">
-              <Plus className="h-5 w-5" strokeWidth={3} />
+            <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg text-white">
+              <Image src="/images/HSP_logo.png" alt="logo"
+            priority height={50} width={40}/>
             </div>
             <div className="leading-tight">
               <p className="text-[15px] font-bold text-slate-900">HealthSpine</p>
