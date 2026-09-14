@@ -1,7 +1,15 @@
+import { cookies } from "next/headers";
+import { redirect } from "next/navigation";
 import Image from "next/image";
 import LoginForm from "@/components/auth/LoginForm";
+import { AUTH_COOKIE_NAME } from "@/lib/auth";
 
-export default function LoginPage() {
+export default async function LoginPage() {
+  const cookieStore = await cookies();
+  if (cookieStore.get(AUTH_COOKIE_NAME)?.value) {
+    redirect("/dashboard");
+  }
+
   return (
     <div className="flex min-h-screen w-full items-center justify-center bg-slate-100 p-4">
       <div className="flex w-full max-w-5xl overflow-hidden rounded-2xl bg-white shadow-2xl lg:min-h-[600px]">
@@ -16,7 +24,7 @@ export default function LoginPage() {
           />
           <div className="absolute inset-0 bg-gradient-to-b from-brand-navy/85 via-brand-blue-dark/60 to-brand-teal/70" />
 
-          <div className="relative z-10 flex flex-col gap-4 p-10 top-55">
+          <div className="relative z-10 flex flex-col gap-4 p-10 top-50">
             <h1 className="max-w-md text-3xl font-bold leading-tight tracking-tight text-white drop-shadow-sm md:text-4xl lg:text-[2.75rem]">
               Smarter Healthcare.
               <br />
