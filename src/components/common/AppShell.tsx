@@ -55,7 +55,7 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
         </header>
 
         {/* Scrollable Page Content */}
-        <main className="flex-1 p-4 sm:p-6 lg:p-8">
+        <main className="flex-1 overflow-y-auto">
           {children}
         </main>
       </div>
