@@ -1,6 +1,5 @@
-// src/components/common/Sidebar.tsx
-"use client";
 
+"use client";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useState } from "react";
@@ -57,7 +56,7 @@ export default function Sidebar({ isOpen, onClose }: SidebarProps) {
               <Plus className="h-5 w-5" strokeWidth={3} />
             </div>
             <div className="leading-tight">
-              <p className="text-[15px] font-bold text-slate-900">Shri Ram Hospital</p>
+              <p className="text-[15px] font-bold text-slate-900">HealthSpine</p>
               <p className="text-xs text-slate-400">Management System</p>
             </div>
           </button>
