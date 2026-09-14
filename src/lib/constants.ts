@@ -1,0 +1,3 @@
+export const ROLE_GROUPS = {
+  ADMIN_PRINCIPAL: ["ADMIN", "SUPER_ADMIN"],
+};
