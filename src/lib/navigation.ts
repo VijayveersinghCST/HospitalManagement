@@ -7,6 +7,7 @@ import {
   CalendarDays,
   Pill,
   Syringe,
+  Phone,
 } from "lucide-react";
 
 export interface NavChild {
@@ -26,6 +27,11 @@ export const NAV_ITEMS: NavItem[] = [
     label: "Dashboard",
     icon: LayoutGrid,
     href: "/dashboard",
+  },
+  {
+    label: "Receptionist",
+    icon: Phone,
+    href: "/receptionist",
   },
   {
     label: "Doctor Management",
