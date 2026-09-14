@@ -6,6 +6,7 @@ import {
   User,
   CalendarDays,
   Pill,
+  Syringe,
 } from "lucide-react";
 
 export interface NavChild {
@@ -27,18 +28,14 @@ export const NAV_ITEMS: NavItem[] = [
     href: "/dashboard",
   },
   {
-    label: "User & Role Management",
-    icon: Users,
-    href: "/user-management",
-  },
-  {
     label: "Doctor Management",
     icon: Stethoscope,
-    children: [
-      { label: "Doctor List", href: "/doctors" },
-      { label: "Add Doctor", href: "/doctors/add" },
-      { label: "Role & Permissions", href: "/doctors/roles" },
-    ],
+    href: "/doctors"
+  },
+  {
+    label: "Nurse",
+    icon: Syringe,
+    href: "/doctors"
   },
   {
     label: "Patients",
@@ -54,6 +51,11 @@ export const NAV_ITEMS: NavItem[] = [
     label: "Pharmacy",
     icon: Pill,
     href: "/pharmacy",
+  },
+  {
+    label: "User & Role Management",
+    icon: Users,
+    href: "/user-management",
   },
 ];
 
