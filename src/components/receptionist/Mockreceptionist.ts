@@ -1,0 +1,107 @@
+import { Receptionist, ReceptionistStatData } from "./Receptionist";
+
+export const MOCK_RECEPTIONISTS: Receptionist[] = [
+    {
+        id: "REC-001",
+        name: "Priya Sharma",
+        role: "Front Desk Receptionist",
+        employeeId: "REC-2021-001",
+        allocatedDesk: "Front Desk A",
+        deskTone: "assigned",
+        shiftTiming: "Morning (06:00 - 14:00)",
+        status: "Active",
+        avatarColor: "#2563eb",
+    },
+    {
+        id: "REC-002",
+        name: "Rahul Verma",
+        role: "Emergency Desk Receptionist",
+        employeeId: "REC-2022-014",
+        allocatedDesk: "ER Desk",
+        deskTone: "priority",
+        shiftTiming: "Night (22:00 - 06:00)",
+        status: "Active",
+        avatarColor: "#dc2626",
+    },
+    {
+        id: "REC-003",
+        name: "Sneha Gupta",
+        role: "Pediatrics Receptionist",
+        employeeId: "REC-2020-007",
+        allocatedDesk: "Wing B Desk",
+        deskTone: "assigned",
+        shiftTiming: "Afternoon (14:00 - 22:00)",
+        status: "On Leave",
+        avatarColor: "#7c3aed",
+    },
+    {
+        id: "REC-004",
+        name: "Amit Patel",
+        role: "Front Desk Receptionist",
+        employeeId: "REC-2023-021",
+        allocatedDesk: "Unassigned",
+        deskTone: "unassigned",
+        shiftTiming: "Morning (06:00 - 14:00)",
+        status: "Offline",
+        avatarColor: "#d97706",
+    },
+    {
+        id: "REC-005",
+        name: "Anjali Singh",
+        role: "Cardiology Receptionist",
+        employeeId: "REC-2023-005",
+        allocatedDesk: "Wing A Desk",
+        deskTone: "assigned",
+        shiftTiming: "Afternoon (14:00 - 22:00)",
+        status: "Active",
+        avatarColor: "#0891b2",
+    },
+];
+
+export function getReceptionistById(id: string): Receptionist | undefined {
+    return MOCK_RECEPTIONISTS.find((r) => r.id === id || r.employeeId === id);
+}
+
+export const MOCK_RECEPTIONIST_STATS: ReceptionistStatData[] = [
+    {
+        id: "total-team",
+        label: "Total Receptionists",
+        value: "24",
+        icon: "team",
+        iconColor: "#2563eb",
+        iconBg: "#dbeafe",
+        footnote: "5 desks covered",
+        footnoteColor: "#2563eb",
+    },
+    {
+        id: "active-now",
+        label: "Active Now",
+        value: "18",
+        icon: "check",
+        iconColor: "#15803d",
+        iconBg: "#dcfce7",
+        footnote: "75% of team on shift",
+        footnoteColor: "#15803d",
+        progressPercent: 75,
+    },
+    {
+        id: "on-leave",
+        label: "On Leave",
+        value: "3",
+        icon: "calendar",
+        iconColor: "#a16207",
+        iconBg: "#fef3c7",
+        footnote: "Returning this week",
+        footnoteColor: "#a16207",
+    },
+    {
+        id: "unassigned-desks",
+        label: "Unassigned Desks",
+        value: "2",
+        icon: "alert",
+        iconColor: "#b91c1c",
+        iconBg: "#fee2e2",
+        footnote: "Needs coverage",
+        footnoteColor: "#b91c1c",
+    },
+];
