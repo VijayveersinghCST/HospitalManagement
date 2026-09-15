@@ -1,14 +1,13 @@
-// Statusbadge.tsx
-import { ReceptionistStatus } from "./Receptionist";
+import { PharmacyStaffStatus } from "./Pharmacystaff";
 import { COLORS } from "@/constants/colors";
 
-const STATUS_STYLES: Record<ReceptionistStatus, { bg: string; text: string }> = {
+const STATUS_STYLES: Record<PharmacyStaffStatus, { bg: string; text: string }> = {
     Active: { bg: `${COLORS.green}1a`, text: COLORS.green },
-    Offline: { bg: "#F1F5F9", text: COLORS.gray },
-    "On Leave": { bg: `${COLORS.teal}1a`, text: COLORS.teal },
+    "On Leave": { bg: "#FEF3C7", text: "#B45309" },
+    Inactive: { bg: "#F1F5F9", text: COLORS.gray },
 };
 
-export default function StatusBadge({ status }: { status: ReceptionistStatus }) {
+export default function PharmacyStaffStatusBadge({ status }: { status: PharmacyStaffStatus }) {
     const style = STATUS_STYLES[status];
     return (
         <span

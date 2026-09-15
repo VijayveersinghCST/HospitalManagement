@@ -1,3 +1,6 @@
+// Segmentedchoice.tsx
+import { COLORS } from "@/constants/colors";
+
 interface SegmentedChoiceProps {
     label: string;
     required?: boolean;
@@ -15,9 +18,9 @@ export default function SegmentedChoice({
                                         }: SegmentedChoiceProps) {
     return (
         <div className="flex flex-col gap-1.5">
-      <span className="text-sm font-medium text-slate-700">
-        {label} {required && <span className="text-red-500">*</span>}
-      </span>
+            <span className="text-sm font-medium" style={{ color: COLORS.navy }}>
+                {label} {required && <span className="text-red-500">*</span>}
+            </span>
             <div className="grid grid-cols-3 gap-2">
                 {options.map((option) => {
                     const isSelected = value === option;
@@ -26,11 +29,12 @@ export default function SegmentedChoice({
                             key={option}
                             type="button"
                             onClick={() => onChange(option)}
-                            className={`rounded-lg border px-3 py-2.5 text-sm font-medium transition ${
+                            className="rounded-lg border px-3 py-2.5 text-sm font-medium transition"
+                            style={
                                 isSelected
-                                    ? "border-brand-500 bg-brand-50 text-brand-700"
-                                    : "border-slate-200 bg-white text-slate-600 hover:border-slate-300"
-                            }`}
+                                    ? { borderColor: COLORS.blueLight, backgroundColor: `${COLORS.blue}0d`, color: COLORS.blue }
+                                    : { borderColor: "#E2E8F0", backgroundColor: "#FFFFFF", color: COLORS.gray }
+                            }
                         >
                             {option}
                         </button>

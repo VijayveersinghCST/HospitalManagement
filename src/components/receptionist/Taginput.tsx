@@ -1,5 +1,7 @@
+
 import { KeyboardEvent, useState } from "react";
 import { X } from "lucide-react";
+import { COLORS } from "@/constants/colors";
 
 interface TagInputProps {
     label: string;
@@ -49,33 +51,36 @@ export default function TagInput({
 
     return (
         <div className="flex flex-col gap-1.5">
-            <label className="text-sm font-medium text-slate-700">
+            <label className="text-sm font-medium" style={{ color: COLORS.navy }}>
                 {label} {required && <span className="text-red-500">*</span>}
             </label>
             <div className="relative">
-                <div className="flex flex-wrap items-center gap-2 rounded-lg border border-slate-200 px-2 py-2 focus-within:border-brand-500 focus-within:ring-2 focus-within:ring-brand-100">
+                <div className="flex flex-wrap items-center gap-2 rounded-lg border border-slate-200 px-2 py-2 focus-within:border-[#1565D8] focus-within:ring-2 focus-within:ring-[#1565D81a]">
                     {values.map((tag) => (
                         <span
                             key={tag}
-                            className="flex items-center gap-1 rounded-md bg-brand-50 px-2 py-1 text-xs font-medium text-brand-700"
+                            className="flex items-center gap-1 rounded-md px-2 py-1 text-xs font-medium"
+                            style={{ backgroundColor: `${COLORS.teal}1a`, color: COLORS.teal }}
                         >
-              {tag}
+                            {tag}
                             <button
                                 type="button"
                                 onClick={() => removeTag(tag)}
-                                className="text-brand-500 hover:text-brand-700"
+                                className="opacity-70 hover:opacity-100"
+                                style={{ color: COLORS.teal }}
                                 aria-label={`Remove ${tag}`}
                             >
-                <X size={12} />
-              </button>
-            </span>
+                                <X size={12} />
+                            </button>
+                        </span>
                     ))}
                     <input
                         value={draft}
                         onChange={(e) => setDraft(e.target.value)}
                         onKeyDown={handleKeyDown}
                         placeholder={values.length === 0 ? placeholder : ""}
-                        className="min-w-[100px] flex-1 border-none px-1 py-0.5 text-sm text-slate-900 outline-none placeholder:text-slate-400"
+                        className="min-w-[100px] flex-1 border-none px-1 py-0.5 text-sm outline-none placeholder:text-slate-400"
+                        style={{ color: COLORS.navy }}
                     />
                 </div>
                 {filteredSuggestions.length > 0 && (
@@ -85,7 +90,8 @@ export default function TagInput({
                                 <button
                                     type="button"
                                     onClick={() => addTag(s)}
-                                    className="w-full px-3 py-2 text-left text-sm text-slate-700 hover:bg-slate-50"
+                                    className="w-full px-3 py-2 text-left text-sm hover:bg-slate-50"
+                                    style={{ color: COLORS.navy }}
                                 >
                                     {s}
                                 </button>
@@ -94,7 +100,11 @@ export default function TagInput({
                     </ul>
                 )}
             </div>
-            {hint && <p className="text-xs text-slate-400">{hint}</p>}
+            {hint && (
+                <p className="text-xs" style={{ color: COLORS.gray }}>
+                    {hint}
+                </p>
+            )}
         </div>
     );
 }

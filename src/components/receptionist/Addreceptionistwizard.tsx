@@ -33,7 +33,7 @@ export default function AddReceptionistWizard() {
             // TODO: replace with a real submission, e.g.
             // await fetch("/api/receptionists", { method: "POST", body: JSON.stringify(formData) })
             console.log("New receptionist submitted:", formData);
-            router.push("/receptionists");
+            router.push("/receptionist");
             return;
         }
         goNext();

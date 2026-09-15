@@ -49,6 +49,13 @@ export interface Receptionist {
     shiftTiming: string;
     status: ReceptionistStatus;
     avatarColor: string;
+    email: string;
+    contactNumber: string;
+    emergencyContact: string;
+    residentialAddress: string;
+    department: string;
+    languages: string[];
+    specializedSkills: string[];
 }
 
 export interface ReceptionistStatData {
