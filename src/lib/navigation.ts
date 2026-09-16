@@ -38,11 +38,11 @@ export const NAV_ITEMS: NavItem[] = [
     icon: Stethoscope,
     href: "/doctors"
   },
-  {
-    label: "Nurse",
-    icon: Syringe,
-    href: "/doctors"
-  },
+{
+  label: "Nurse",
+  icon: Syringe,
+  href: "/nurse",  
+},
   {
     label: "Patients",
     icon: User,
