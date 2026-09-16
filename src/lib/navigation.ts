@@ -8,6 +8,7 @@ import {
   Pill,
   Syringe,
   Phone,
+  Settings2,
 } from "lucide-react";
 
 export interface NavChild {
@@ -32,6 +33,11 @@ export const NAV_ITEMS: NavItem[] = [
     label: "Receptionist",
     icon: Phone,
     href: "/receptionist",
+    children: [
+      { label: "All Receptionists", href: "/receptionist" },
+      { label: "Add Receptionist", href: "/receptionist/add" },
+      { label: "Edit Receptionist", href: "/receptionist/edit" },
+    ],
   },
   {
     label: "Doctor Management",
@@ -57,6 +63,23 @@ export const NAV_ITEMS: NavItem[] = [
     label: "Pharmacy",
     icon: Pill,
     href: "/pharmacy",
+    children: [
+      { label: "Staff Management", href: "/pharmacy/staff" },
+      { label: "Add Pharmacy Staff", href: "/pharmacy/staff/add" },
+      { label: "Edit Pharmacy Staff", href: "/pharmacy/staff/edit" },
+    ],
+  },
+  {
+    label: "Hospital Configuration",
+    icon: Settings2,
+    href: "/hospital-config",
+    children: [
+      { label: "Overview", href: "/hospital-config" },
+      { label: "Departments", href: "/hospital-config/departments" },
+      { label: "Wards & Rooms", href: "/hospital-config/wards/all" },
+      { label: "Beds", href: "/hospital-config/beds" },
+      { label: "Medical Equipment", href: "/hospital-config/equipment" },
+    ],
   },
   {
     label: "User & Role Management",
@@ -81,10 +104,14 @@ export function findActiveNav(pathname: string): {
     if (item.children) {
       const child = item.children.find((c) => pathname === c.href);
       if (child) return { item, child };
-      // Dynamic routes, e.g. /doctors/123/edit, still belong to "Doctor List"
-      const parent = item.children.find(
-        (c) => c.href !== "/doctors/add" && c.href !== "/doctors/roles" && pathname.startsWith(c.href + "/")
-      );
+      // Dynamic/action routes, e.g. /receptionist/123/edit or
+      // /hospital-config/departments/add, still belong to their list-style
+      // child. Action segments are excluded so they don't get matched as a
+      // parent for some other nested path.
+      const parent = item.children.find((c) => {
+        const lastSegment = c.href.split("/").pop() ?? "";
+        return !["add", "edit", "roles"].includes(lastSegment) && pathname.startsWith(c.href + "/");
+      });
       if (parent) return { item, child: parent };
     }
   }
