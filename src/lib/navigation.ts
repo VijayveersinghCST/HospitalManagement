@@ -1,3 +1,4 @@
+// src/lib/navigation.ts
 import type { LucideIcon } from "lucide-react";
 import {
   LayoutGrid,
@@ -9,6 +10,7 @@ import {
   Syringe,
   Phone,
   Settings2,
+  UserCheck,
 } from "lucide-react";
 
 export interface NavChild {
@@ -42,12 +44,22 @@ export const NAV_ITEMS: NavItem[] = [
   {
     label: "Doctor Management",
     icon: Stethoscope,
-    href: "/doctors"
+    href: "/doctors",
   },
   {
     label: "Nurse",
     icon: Syringe,
-    href: "/doctors"
+    href: "/nurse",
+  },
+  {
+    label: "Staff Management",
+    icon: UserCheck,
+    href: "/staff-management",
+    children: [
+      { label: "All Staff", href: "/staff-management" },
+      { label: "Add Staff", href: "/staff-management/add" },
+      { label: "Daily Roster", href: "/staff-management/roster" },
+    ],
   },
   {
     label: "Patients",
@@ -98,21 +110,22 @@ export function findActiveNav(pathname: string): {
   child: NavChild | null;
 } {
   for (const item of NAV_ITEMS) {
-    if (item.href && pathname === item.href) {
-      return { item, child: null };
-    }
     if (item.children) {
       const child = item.children.find((c) => pathname === c.href);
       if (child) return { item, child };
-      // Dynamic/action routes, e.g. /receptionist/123/edit or
-      // /hospital-config/departments/add, still belong to their list-style
-      // child. Action segments are excluded so they don't get matched as a
-      // parent for some other nested path.
+
       const parent = item.children.find((c) => {
         const lastSegment = c.href.split("/").pop() ?? "";
-        return !["add", "edit", "roles"].includes(lastSegment) && pathname.startsWith(c.href + "/");
+        return (
+          !["add", "edit", "roles"].includes(lastSegment) &&
+          pathname.startsWith(c.href + "/")
+        );
       });
       if (parent) return { item, child: parent };
+    }
+
+    if (item.href && pathname === item.href) {
+      return { item, child: null };
     }
   }
   return { item: null, child: null };

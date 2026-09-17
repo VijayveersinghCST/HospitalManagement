@@ -144,7 +144,7 @@ export default function LoginForm() {
         >
           {isSubmitting ? (
             <>
-              <Loader2 className="h-4 w-4 animate-spin text-white" />
+              <Loader2 className="h-4 w-4 animate-spin text-white"/>
               <span>Authenticating...</span>
             </>
           ) : (
@@ -180,7 +180,7 @@ export default function LoginForm() {
               alt="ComputeSoft Technologies Pvt. Ltd."
               width={160}
               height={40}
-              className="h-7 w-auto object-contain grayscale transition duration-300 group-hover:grayscale-0"
+              className="h-7 w-auto object-contain transition duration-300"
             />
           </a>
         </div>
