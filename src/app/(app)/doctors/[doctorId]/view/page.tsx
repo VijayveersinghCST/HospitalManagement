@@ -60,7 +60,7 @@ export default function DoctorViewPage({ params }: DoctorViewProps) {
     };
 
     return (
-        <div className="mx-auto max-w-7xl space-y-6 pb-28">
+        <div className="mx-auto max-w-7xl space-y-6 p-5">
             {/* 1. Profile Banner Card */}
             <div className="flex flex-col gap-4 rounded-2xl border border-slate-200/80 bg-white p-5 shadow-sm sm:flex-row sm:items-center sm:justify-between sm:p-6">
                 <div className="flex items-center gap-4">
