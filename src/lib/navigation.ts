@@ -11,6 +11,8 @@ import {
   Phone,
   Settings2,
   UserCheck,
+  Wallet,
+  Clock,
 } from "lucide-react";
 
 export interface NavChild {
@@ -62,6 +64,21 @@ export const NAV_ITEMS: NavItem[] = [
     ],
   },
   {
+    label: "Accountant / Finance",
+    icon: Wallet,
+    href: "/accountants",
+    children: [
+      { label: "All Accountants", href: "/accountants" },
+      { label: "Add Accountant", href: "/accountants/add" },
+      { label: "Edit Accountant", href: "/accountants/edit" },
+    ],
+  },
+  {
+    label: "Shift Configuration",
+    icon: Clock,
+    href: "/shift-config",
+  },
+  {
     label: "Patients",
     icon: User,
     href: "/patients",
@@ -70,6 +87,11 @@ export const NAV_ITEMS: NavItem[] = [
     label: "Appointments",
     icon: CalendarDays,
     href: "/appointments",
+    children: [
+      { label: "All Appointments", href: "/appointments" },
+      { label: "Book Appointment", href: "/appointments/add" },
+      { label: "Edit Appointment", href: "/appointments/edit" },
+    ],
   },
   {
     label: "Pharmacy",
@@ -97,6 +119,10 @@ export const NAV_ITEMS: NavItem[] = [
     label: "User & Role Management",
     icon: Users,
     href: "/user-management",
+    children: [
+      { label: "Roles & Users", href: "/user-management" },
+      { label: "Add Role", href: "/user-management/roles/new" },
+    ],
   },
 ];
 
@@ -114,11 +140,15 @@ export function findActiveNav(pathname: string): {
       const child = item.children.find((c) => pathname === c.href);
       if (child) return { item, child };
 
+      // Dynamic/action routes, e.g. /receptionist/123/edit or
+      // /accountants/123/edit, still belong to their list-style child.
+      // Action segments are excluded so they don't get matched as a
+      // parent for some other nested path.
       const parent = item.children.find((c) => {
         const lastSegment = c.href.split("/").pop() ?? "";
         return (
-          !["add", "edit", "roles"].includes(lastSegment) &&
-          pathname.startsWith(c.href + "/")
+            !["add", "edit", "roles", "new"].includes(lastSegment) &&
+            pathname.startsWith(c.href + "/")
         );
       });
       if (parent) return { item, child: parent };
