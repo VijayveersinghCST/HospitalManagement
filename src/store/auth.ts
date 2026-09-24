@@ -1,14 +1,26 @@
-import { createStore } from "@/lib/createStore";
+import { create } from "zustand";
+import { persist } from "zustand/middleware";
 
-// TODO: replace `any` with a proper User type once the shape is known
-interface AuthState {
-  user: any | null;
-  setUser: (user: any | null) => void;
-  logout: () => void;
+export interface AuthUser {
+    email: string;
+    /** Role id matching a Role.id in store/permissions.ts, e.g. "doctor", "nurse". */
+    role?: string;
+    [key: string]: unknown;
 }
 
-export const useAuthStore = createStore<AuthState>((set) => ({
-  user: null,
-  setUser: (user) => set({ user }),
-  logout: () => set({ user: null }),
-}));
+interface AuthState {
+    user: AuthUser | null;
+    setUser: (user: AuthUser) => void;
+    clearUser: () => void;
+}
+
+export const useAuthStore = create<AuthState>()(
+    persist(
+        (set) => ({
+            user: null,
+            setUser: (user) => set({ user }),
+            clearUser: () => set({ user: null }),
+        }),
+        { name: "hms-auth" }
+    )
+);

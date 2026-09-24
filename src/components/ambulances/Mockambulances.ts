@@ -1,0 +1,71 @@
+import { Ambulance } from "./Ambulances";
+
+export const MOCK_AMBULANCES: Ambulance[] = [
+    {
+        id: "1",
+        vehicleNumber: "UP32 AB 1234",
+        ambulanceType: "Advanced Life Support (ALS)",
+        status: "On Duty",
+        baseStation: "Emergency Wing - Bay A",
+        driverName: "Ramesh Yadav",
+        driverContact: "+91 98765 11111",
+        driverLicenseNumber: "UP32 20210004521",
+        equipment: ["oxygen-cylinder", "defibrillator", "ecg-monitor", "ventilator"],
+        lastServicedDate: "2026-08-15",
+        currentPatientName: "Ramesh Chandra",
+        currentDestination: "City Cardiac Centre",
+        dispatchedAt: "2026-09-21",
+    },
+    {
+        id: "2",
+        vehicleNumber: "UP32 CD 5678",
+        ambulanceType: "Basic Life Support (BLS)",
+        status: "Available",
+        baseStation: "Main Hospital - Bay 1",
+        driverName: "Suresh Kumar",
+        driverContact: "+91 91234 22222",
+        driverLicenseNumber: "UP32 20190012987",
+        equipment: ["oxygen-cylinder", "stretcher", "first-aid-kit"],
+        lastServicedDate: "2026-09-01",
+    },
+    {
+        id: "3",
+        vehicleNumber: "UP32 EF 9012",
+        ambulanceType: "Patient Transport",
+        status: "Available",
+        baseStation: "Main Hospital - Bay 2",
+        driverName: "Anil Verma",
+        driverContact: "+91 88997 33333",
+        driverLicenseNumber: "UP32 20200078654",
+        equipment: ["stretcher", "first-aid-kit"],
+        lastServicedDate: "2026-08-28",
+    },
+    {
+        id: "4",
+        vehicleNumber: "UP32 GH 3456",
+        ambulanceType: "Advanced Life Support (ALS)",
+        status: "Under Maintenance",
+        baseStation: "Emergency Wing - Bay B",
+        driverName: "Deepak Singh",
+        driverContact: "+91 77665 44444",
+        driverLicenseNumber: "UP32 20180045123",
+        equipment: ["oxygen-cylinder", "defibrillator", "ecg-monitor"],
+        lastServicedDate: "2026-09-18",
+    },
+    {
+        id: "5",
+        vehicleNumber: "UP32 IJ 7890",
+        ambulanceType: "Mortuary Van",
+        status: "Out of Service",
+        baseStation: "Satellite Clinic - North",
+        driverName: "Mohan Lal",
+        driverContact: "+91 90000 55555",
+        driverLicenseNumber: "UP32 20170098765",
+        equipment: [],
+        lastServicedDate: "2026-06-10",
+    },
+];
+
+export function getAmbulanceById(id: string): Ambulance | undefined {
+    return MOCK_AMBULANCES.find((a) => a.id === id || a.vehicleNumber === id);
+}

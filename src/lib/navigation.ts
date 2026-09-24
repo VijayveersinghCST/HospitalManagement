@@ -11,12 +11,11 @@ import {
   Phone,
   Settings2,
   UserCheck,
-<<<<<<< HEAD
   BedDouble,
-=======
+
   Wallet,
   Clock,
->>>>>>> 51a411a3f6c21dd31baf52f946fbd02d9755f8b6
+  Ambulance,
 } from "lucide-react";
 
 export interface NavChild {
@@ -98,10 +97,21 @@ export const NAV_ITEMS: NavItem[] = [
     ],
   },
   {
+    label: "Ambulances",
+    icon: Ambulance,
+    href: "/ambulance",
+    children: [
+      { label: "All Ambulances", href: "/ambulance" },
+      { label: "Register Ambulance", href: "/ambulance/add" },
+      { label: "Manage Ambulance", href: "/ambulance/edit" },
+    ],
+  },
+  {
     label: "Pharmacy",
     icon: Pill,
     href: "/pharmacy",
     children: [
+      { label: "Store Management", href: "/pharmacy/store-management" },
       { label: "Staff Management", href: "/pharmacy/staff" },
       { label: "Add Pharmacy Staff", href: "/pharmacy/staff/add" },
       { label: "Edit Pharmacy Staff", href: "/pharmacy/staff/edit" },
@@ -136,6 +146,7 @@ export const NAV_ITEMS: NavItem[] = [
     children: [
       { label: "Roles & Users", href: "/user-management" },
       { label: "Add Role", href: "/user-management/roles/new" },
+      { label: "Permissions", href: "/permissions" },
     ],
   },
 ];
