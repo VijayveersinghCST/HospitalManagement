@@ -1,27 +1,64 @@
-export const AUTH_COOKIE_NAME = "token";
+import { useAuthStore } from "@/store/auth";
 
-export function jwtDecode(token: string): unknown | null {
-  // TODO: decode JWT payload
-  return null;
+const TOKEN_KEY = "token";
+export const AUTH_COOKIE_NAME = "token"; // read by middleware.ts and server components — keep in sync
+const COOKIE_NAME = AUTH_COOKIE_NAME;
+const DEFAULT_MAX_AGE = 60 * 60 * 8; // 8h fallback if token has no exp
+
+type JwtPayload = { exp?: number; [key: string]: unknown };
+
+export function decodeToken(token: string): JwtPayload | null {
+  try {
+    const part = token.split(".")[1];
+    if (!part) return null;
+    const b64 = part
+        .replace(/-/g, "+")
+        .replace(/_/g, "/")
+        .padEnd(Math.ceil(part.length / 4) * 4, "=");
+    return JSON.parse(atob(b64));
+  } catch {
+    return null;
+  }
 }
 
-/** Client-only: reads the auth cookie set after a successful login. */
+export function isTokenValid(token?: string | null): boolean {
+  if (!token) return false;
+  const payload = decodeToken(token);
+  if (!payload) return false;
+  if (typeof payload.exp === "number" && payload.exp * 1000 <= Date.now()) {
+    return false;
+  }
+  return true;
+}
+
 export function getAuthToken(): string | null {
-  if (typeof document === "undefined") return null;
-  const match = document.cookie.match(
-    new RegExp(`(?:^|; )${AUTH_COOKIE_NAME}=([^;]*)`)
-  );
-  return match ? decodeURIComponent(match[1]) : null;
+  if (typeof window === "undefined") return null;
+  try {
+    return localStorage.getItem(TOKEN_KEY);
+  } catch {
+    return null;
+  }
 }
 
-/** Client-only: sets the auth cookie after a successful login. */
-export function setAuthToken(token: string, maxAgeSeconds = 60 * 60 * 8): void {
-  document.cookie = `${AUTH_COOKIE_NAME}=${encodeURIComponent(
-    token
-  )}; path=/; max-age=${maxAgeSeconds}; SameSite=Lax`;
+export function setAuthToken(token: string): void {
+  if (typeof window === "undefined") return;
+
+  localStorage.setItem(TOKEN_KEY, token);
+
+  const exp = decodeToken(token)?.exp;
+  const maxAge = exp
+      ? Math.max(exp - Math.floor(Date.now() / 1000), 0)
+      : DEFAULT_MAX_AGE;
+  const secure = window.location.protocol === "https:" ? "; Secure" : "";
+
+  document.cookie = `${COOKIE_NAME}=${token}; Path=/; Max-Age=${maxAge}; SameSite=Lax${secure}`;
 }
 
-/** Client-only: clears the auth cookie on logout. */
-export function clearAuthToken(): void {
-  document.cookie = `${AUTH_COOKIE_NAME}=; path=/; max-age=0`;
+/** Wipe token, cookie and user store in one place. */
+export function clearSession(): void {
+  if (typeof window === "undefined") return;
+
+  localStorage.removeItem(TOKEN_KEY);
+  document.cookie = `${COOKIE_NAME}=; Path=/; Max-Age=0; SameSite=Lax`;
+  useAuthStore.getState().clearUser();
 }

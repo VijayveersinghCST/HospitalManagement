@@ -1,5 +1,6 @@
 // components/nurse/Mocknurse.ts
-import { Nurse, NurseStatData, StaffingUpdate } from "../../app/(app)/nurse/page";
+import { Nurse, NurseStatData, StaffingUpdate } from "../../app/(app)/nurse";
+
 import { COLORS } from "@/constants/colors";
 
 export const MOCK_NURSES: Nurse[] = [

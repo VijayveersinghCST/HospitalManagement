@@ -1,33 +1,49 @@
-import { NextResponse } from "next/server";
-import type { NextRequest } from "next/server";
-import { AUTH_COOKIE_NAME } from "@/lib/auth";
+import { NextResponse, type NextRequest } from "next/server";
 
-// Routes that don't require a logged-in user. "/" handles its own
-// redirect (to /login or /dashboard) once it reads the cookie itself.
-const PUBLIC_PATHS = ["/login", "/"];
+const COOKIE_NAME = "token"; // must match lib/auth.ts
+const PUBLIC_PATHS = ["/login"];
+const DEFAULT_AUTHED_ROUTE = "/dashboard";
 
-export function middleware(request: NextRequest) {
-  const { pathname } = request.nextUrl;
-  const token = request.cookies.get(AUTH_COOKIE_NAME)?.value;
-  const isPublicPath = PUBLIC_PATHS.includes(pathname);
+function isTokenValid(token?: string): boolean {
+  if (!token) return false;
+  try {
+    const part = token.split(".")[1];
+    if (!part) return false;
+    const b64 = part
+        .replace(/-/g, "+")
+        .replace(/_/g, "/")
+        .padEnd(Math.ceil(part.length / 4) * 4, "=");
+    const payload = JSON.parse(atob(b64));
+    return !(typeof payload.exp === "number" && payload.exp * 1000 <= Date.now());
+  } catch {
+    return false;
+  }
+}
 
-  if (!token && !isPublicPath) {
-    const loginUrl = new URL("/login", request.url);
-    loginUrl.searchParams.set("from", pathname);
-    return NextResponse.redirect(loginUrl);
+export function middleware(req: NextRequest) {
+  const { pathname, search } = req.nextUrl;
+  const token = req.cookies.get(COOKIE_NAME)?.value;
+  const authed = isTokenValid(token);
+  const isPublic = PUBLIC_PATHS.some(
+      (p) => pathname === p || pathname.startsWith(`${p}/`)
+  );
+
+  if (!authed && !isPublic) {
+    const url = new URL("/login", req.url);
+    if (pathname !== "/") url.searchParams.set("next", pathname + search);
+    const res = NextResponse.redirect(url);
+    if (token) res.cookies.delete(COOKIE_NAME); // drop stale/expired cookie
+    return res;
   }
 
-  if (token && pathname === "/login") {
-    return NextResponse.redirect(new URL("/dashboard", request.url));
+  if (authed && isPublic) {
+    return NextResponse.redirect(new URL(DEFAULT_AUTHED_ROUTE, req.url));
   }
-
-  // TODO: verify JWT + role-based access checks here
 
   return NextResponse.next();
 }
 
 export const config = {
-  // Run on every route except static assets, so any real page (including
-  // ones added later) is protected by default.
-  matcher: ["/((?!_next/static|_next/image|favicon.ico|images).*)"],
+  // Skip API routes, Next internals and static files
+  matcher: ["/((?!api|_next/static|_next/image|favicon.ico|images|.*\\..*).*)"],
 };
