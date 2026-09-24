@@ -11,6 +11,7 @@ import {
   Phone,
   Settings2,
   UserCheck,
+  BedDouble,
 } from "lucide-react";
 
 export interface NavChild {
@@ -79,6 +80,16 @@ export const NAV_ITEMS: NavItem[] = [
       { label: "Staff Management", href: "/pharmacy/staff" },
       { label: "Add Pharmacy Staff", href: "/pharmacy/staff/add" },
       { label: "Edit Pharmacy Staff", href: "/pharmacy/staff/edit" },
+    ],
+  },
+  {
+    label: "Wards, Rooms & Beds Management",
+    icon: BedDouble,
+    href: "/wardRomsAndBeds/ward-management",
+    children: [
+      { label: "Ward Management", href: "/wardRomsAndBeds/ward-management" },
+      { label: "Rooms Management", href: "/wardRomsAndBeds/room-management" },
+      { label: "Beds Management", href: "/wardRomsAndBeds/bed-management" },
     ],
   },
   {
