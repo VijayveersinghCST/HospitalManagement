@@ -1,21 +1,10 @@
-import { CalendarDays } from "lucide-react";
-import ComingSoon from "@/components/common/ComingSoon";
+import Appointmentdirectorytable from "@/components/appointments/Appointmentdirectorytable";
+import { MOCK_APPOINTMENTS } from "@/components/appointments/Mockappointments";
 
-export default function AppAppointmentsPage() {
-  return (
-    <div>
-      <h1 className="text-2xl font-bold text-slate-900 sm:text-3xl">Appointments</h1>
-      <p className="mt-1.5 text-sm text-slate-500">
-        Schedule and track appointments across departments.
-      </p>
-
-      <div className="mt-6">
-        <ComingSoon
-          title="Appointments is on its way"
-          description="Booking, rescheduling and calendar views will show up here."
-          icon={CalendarDays}
-        />
-      </div>
-    </div>
-  );
+export default function AppointmentsPage() {
+    return (
+        <main className="mx-auto max-w-6xl px-4 py-8 sm:px-6">
+            <Appointmentdirectorytable appointments={MOCK_APPOINTMENTS} />
+        </main>
+    );
 }
